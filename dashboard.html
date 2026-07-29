@@ -1,329 +1,86 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة التحكم | Ibrah.ai</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-background: #0a0a0f;
-color: #fff;
-}
-.navbar {
-position: fixed;
-top: 0;
-width: 100%;
-background: rgba(10,10,15,0.85);
-backdrop-filter: blur(20px);
-border-bottom: 1px solid #2a2a40;
-padding: 12px 20px;
-z-index: 1000;
-}
-.navbar-inner {
-max-width: 1200px;
-margin: 0 auto;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-.navbar-brand {
-font-size: 1.25rem;
-font-weight: 800;
-background: linear-gradient(135deg, #f59e0b, #f97316);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-text-decoration: none;
-}
-.badge {
-background: rgba(245,158,11,0.15);
-color: #f59e0b;
-padding: 4px 10px;
-border-radius: 12px;
-font-size: 0.7rem;
-font-weight: 600;
-}
-.btn {
-padding: 8px 16px;
-background: #16162a;
-border: 1px solid #2a2a40;
-color: #fff;
-border-radius: 8px;
-cursor: pointer;
-font-weight: 600;
-}
-.btn:hover {
-border-color: #f59e0b;
-}
-.dashboard {
-padding: 80px 20px 20px;
-max-width: 1200px;
-margin: 0 auto;
-}
-.greeting {
-font-size: 1.5rem;
-font-weight: 700;
-margin-bottom: 8px;
-}
-.status-text {
-color: #a0a0b8;
-margin-bottom: 24px;
-}
-.stats-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 16px;
-margin-bottom: 24px;
-}
-.stat-item {
-background: #16162a;
-border: 1px solid #2a2a40;
-border-radius: 12px;
-padding: 20px;
-}
-.stat-item-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 8px;
-}
-.stat-item-icon {
-width: 36px;
-height: 36px;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 8px;
-font-size: 1.1rem;
-}
-.stat-item-value {
-font-size: 1.5rem;
-font-weight: 800;
-}
-.stat-item-label {
-font-size: 0.8rem;
-color: #6b6b80;
-}
-.features-title {
-font-size: 1.25rem;
-font-weight: 700;
-margin-bottom: 16px;
-}
-.features-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-gap: 16px;
-}
-.feature-card {
-background: #16162a;
-border: 1px solid #2a2a40;
-border-radius: 16px;
-padding: 24px;
-transition: all 0.3s;
-cursor: pointer;
-}
-.feature-card:hover {
-border-color: #f59e0b;
-transform: translateY(-2px);
-}
-.feature-card.disabled {
-opacity: 0.5;
-pointer-events: none;
-}
-.feature-icon {
-font-size: 2rem;
-margin-bottom: 12px;
-}
-.feature-title {
-font-weight: 700;
-margin-bottom: 6px;
-}
-.feature-desc {
-font-size: 0.85rem;
-color: #a0a0b8;
-}
-.badge-available {
-display: inline-block;
-margin-top: 12px;
-background: rgba(16,185,129,0.15);
-color: #10b981;
-padding: 4px 10px;
-border-radius: 12px;
-font-size: 0.75rem;
-font-weight: 600;
-}
-.badge-soon {
-display: inline-block;
-margin-top: 12px;
-background: rgba(59,130,246,0.15);
-color: #3b82f6;
-padding: 4px 10px;
-border-radius: 12px;
-font-size: 0.75rem;
-font-weight: 600;
-}
-.expired-overlay {
-position: fixed;
-inset: 0;
-background: #0a0a0f;
-z-index: 4000;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 20px;
-}
-.expired-card {
-background: #16162a;
-border: 1px solid #2a2a40;
-border-radius: 24px;
-padding: 40px;
-max-width: 500px;
-width: 100%;
-text-align: center;
-}
-.expired-icon {
-font-size: 3rem;
-margin-bottom: 16px;
-}
-.expired-title {
-font-size: 1.5rem;
-font-weight: 800;
-margin-bottom: 12px;
-}
-.expired-text {
-color: #a0a0b8;
-margin-bottom: 24px;
-line-height: 1.8;
-}
-.btn-primary {
-background: linear-gradient(135deg, #f59e0b, #f97316);
-color: #000;
-border: none;
-padding: 12px 24px;
-border-radius: 8px;
-font-weight: 600;
-cursor: pointer;
-text-decoration: none;
-display: inline-block;
-}
-@media (max-width: 768px) {
-.stats-grid { grid-template-columns: repeat(2, 1fr); }
-.features-grid { grid-template-columns: 1fr; }
-}
-</style>
+
+<title>Ibrah AI Dashboard</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+
 </head>
+
 <body>
-<nav class="navbar">
-<div class="navbar-inner">
-<a href="index.html" class="navbar-brand">
-Ibrah.ai <span class="badge" id="planBadge">✨ Lifetime</span>
+
+<header>
+
+<h2>Ibrah AI</h2>
+
+<button id="logout">Logout</button>
+
+</header>
+
+<div class="card">
+
+<img id="photo">
+
+<h2 id="name"></h2>
+
+<p id="email"></p>
+
+</div>
+
+<div class="info">
+
+<div class="box">
+
+<h3>الخطة</h3>
+
+<p id="plan"></p>
+
+</div>
+
+<div class="box">
+
+<h3>الحالة</h3>
+
+<p id="status"></p>
+
+</div>
+
+<div class="box">
+
+<h3>الطلبات</h3>
+
+<p id="requests"></p>
+
+</div>
+
+<div class="box">
+
+<h3>التجربة</h3>
+
+<p id="trial"></p>
+
+</div>
+
+</div>
+
+<button id="upgrade">
+
+Upgrade Lifetime $9
+
+</button>
+
+<a href="chat.html">
+    <button>ابدأ المحادثة</button>
 </a>
-<button class="btn" onclick="handleLogout()">خروج</button>
-</div>
-</nav>
 
-<div class="dashboard">
-<h1 class="greeting">مرحباً بك! 👋</h1>
-<p class="status-text" id="statusText">اشتراكك Lifetime مفعّل — استمتع بكل المميزات</p>
+<script type="module" src="js/dashboard.js"></script>
 
-<div class="stats-grid">
-<div class="stat-item">
-<div class="stat-item-header">
-<span class="stat-item-label">نوع الاشتراك</span>
-<div class="stat-item-icon" style="background:rgba(245,158,11,0.1);color:#f59e0b;">👑</div>
-</div>
-<div class="stat-item-value" style="font-size:1.1rem;" id="planType">Lifetime</div>
-</div>
-<div class="stat-item">
-<div class="stat-item-header">
-<span class="stat-item-label">الأيام المتبقية</span>
-<div class="stat-item-icon" style="background:rgba(16,185,129,0.1);color:#10b981;">⏰</div>
-</div>
-<div class="stat-item-value" id="daysLeft">∞</div>
-</div>
-<div class="stat-item">
-<div class="stat-item-header">
-<span class="stat-item-label">تاريخ الانتهاء</span>
-<div class="stat-item-icon" style="background:rgba(59,130,246,0.1);color:#3b82f6;">📅</div>
-</div>
-<div class="stat-item-value" style="font-size:0.9rem;" id="expDate">أبداً</div>
-</div>
-<div class="stat-item">
-<div class="stat-item-header">
-<span class="stat-item-label">آخر دخول</span>
-<div class="stat-item-icon" style="background:rgba(139,92,246,0.1);color:#8b5cf6;">🔑</div>
-</div>
-<div class="stat-item-value" style="font-size:0.9rem;" id="lastLogin">الآن</div>
-</div>
-</div>
-
-<h3 class="features-title">الخدمات المتاحة</h3>
-<div class="features-grid">
-<div class="feature-card">
-<div class="feature-icon"></div>
-<h4 class="feature-title">محادثة ذكية</h4>
-<p class="feature-desc">تحدث مع ChatGPT، Claude، Gemini والمزيد</p>
-<span class="badge-available">متاح</span>
-</div>
-<div class="feature-card disabled">
-<div class="feature-icon">🎨</div>
-<h4 class="feature-title">توليد الصور</h4>
-<p class="feature-desc">حوّل أفكارك إلى صور احترافية</p>
-<span class="badge-soon">قريباً</span>
-</div>
-<div class="feature-card disabled">
-<div class="feature-icon">🎬</div>
-<h4 class="feature-title">توليد الفيديو</h4>
-<p class="feature-desc">أنشئ مقاطع فيديو مذهلة من النص</p>
-<span class="badge-soon">قريباً</span>
-</div>
-<div class="feature-card disabled">
-<div class="feature-icon">📄</div>
-<h4 class="feature-title">تحليل المستندات</h4>
-<p class="feature-desc">ارفع ملفات واستخرج المعلومات</p>
-<span class="badge-soon">قريباً</span>
-</div>
-</div>
-</div>
-
-<script>
-// Check authentication
-const userStr = sessionStorage.getItem('ibrah_user');
-if (!userStr) {
-window.location.href = 'access.html';
-}
-
-const user = JSON.parse(userStr);
-
-// Update UI
-document.getElementById('planBadge').textContent = user.plan === 'lifetime' ? '✨ Lifetime' : 'تجريبي';
-document.getElementById('planType').textContent = user.plan === 'lifetime' ? 'Lifetime' : 'تجريبي';
-
-if (user.plan === 'trial') {
-const daysLeft = Math.max(0, Math.ceil((new Date(user.expires_at) - new Date()) / 86400000));
-document.getElementById('daysLeft').textContent = daysLeft + ' يوم';
-document.getElementById('expDate').textContent = new Date(user.expires_at).toLocaleDateString('ar-LB');
-document.getElementById('statusText').textContent = باقي ${daysLeft} يوم على انتهاء الفترة التجريبية`;
-
-if (daysLeft <= 0) {
-document.body.innerHTML = &lt;div class="expired-overlay"&gt; &lt;div class="expired-card"&gt; &lt;div class="expired-icon"&gt;⏰&lt;/div&gt; &lt;h2 class="expired-title"&gt;انتهت الفترة التجريبية&lt;/h2&gt; &lt;p class="expired-text"&gt;مرحباً${user.name}، انتهت فترة التجربة المجانية.<br>قم بالترقية إلى Lifetime للاستمرار.</p>
-<a href="payment.html" class="btn-primary">💛 الترقية عبر Wish Money</a>
-<br><br>
-<button class="btn" onclick="handleLogout()">تسجيل الخروج</button>
-</div>
-</div>
-`;
-}
-} else {
-document.getElementById('daysLeft').textContent = '∞';
-document.getElementById('expDate').textContent = 'أبداً';
-}
-
-function handleLogout() {
-sessionStorage.removeItem('ibrah_user');
-window.location.href = 'access.html';
-}
-</script>
 </body>
+
 </html>
