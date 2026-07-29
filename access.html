@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدخول | Ibrah.ai</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+background: #0a0a0f;
+color: #fff;
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+.card {
+background: #16162a;
+border: 1px solid #2a2a40;
+border-radius: 20px;
+padding: 40px;
+max-width: 400px;
+width: 100%;
+text-align: center;
+}
+.logo {
+width: 64px;
+height: 64px;
+background: linear-gradient(135deg, #f59e0b, #f97316);
+border-radius: 16px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+font-size: 2rem;
+font-weight: bold;
+color: #000;
+margin-bottom: 20px;
+}
+h2 { margin-bottom: 10px; }
+.subtitle { color: #a0a0b8; margin-bottom: 30px; }
+input {
+width: 100%;
+padding: 12px;
+background: #0a0a0f;
+border: 1px solid #2a2a40;
+border-radius: 8px;
+color: #fff;
+font-size: 1rem;
+margin-bottom: 20px;
+text-align: center;
+font-family: monospace;
+letter-spacing: 2px;
+}
+.btn {
+width: 100%;
+padding: 12px;
+background: linear-gradient(135deg, #f59e0b, #f97316);
+border: none;
+border-radius: 8px;
+color: #000;
+font-weight: bold;
+cursor: pointer;
+}
+.error {
+background: rgba(239,68,68,0.1);
+border: 1px solid rgba(239,68,68,0.3);
+color: #ef4444;
+padding: 10px;
+border-radius: 8px;
+margin-bottom: 15px;
+display: none;
+}
+.footer-link {
+margin-top: 20px;
+color: #a0a0b8;
+font-size: 0.9rem;
+}
+.footer-link a {
+color: #f59e0b;
+text-decoration: none;
+}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="logo">إ</div>
+<h2>مرحباً بك في Ibrah.ai</h2>
+<p class="subtitle">أدخل كود الوصول الخاص بك</p>
+
+<div class="error" id="errorMsg">❌ كود غير صالح أو الحساب غير نشط.</div>
+
+<input type="text" id="accessCode" placeholder="IBRAH-XXXXXX" maxlength="12">
+<button class="btn" onclick="handleLogin()">🚀 دخول المنصة</button>
+
+<div class="footer-link">
+ليس لديك كود؟ <a href="payment.html">اشترك الآن</a>
+</div>
+</div>
+
+<script>
+function handleLogin() {
+const code = document.getElementById('accessCode').value.trim().toUpperCase();
+const errorMsg = document.getElementById('errorMsg');
+
+if (!code) {
+errorMsg.textContent = 'الرجاء إدخال كود الوصول';
+errorMsg.style.display = 'block';
+return;
+}
+
+// Demo code for testing
+if (code === 'IBRAH-DEMO') {
+sessionStorage.setItem('ibrah_user', JSON.stringify({
+name: 'مستخدم تجريبي',
+email: 'demo@example.com',
+plan: 'lifetime'
+}));
+window.location.href = 'dashboard.html';
+} else {
+errorMsg.style.display = 'block';
+}
+}
+
+document.getElementById('accessCode').addEventListener('keydown', (e) => {
+if (e.key === 'Enter') handleLogin();
+});
+</script>
+</body>
+</html>

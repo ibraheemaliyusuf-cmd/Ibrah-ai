@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحكم المدير | Ibrah.ai</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+background: #0a0a0f;
+color: #fff;
+}
+.navbar {
+position: fixed;
+top: 0;
+width: 100%;
+background: rgba(10,10,15,0.85);
+backdrop-filter: blur(20px);
+border-bottom: 1px solid #2a2a40;
+padding: 12px 20px;
+z-index: 1000;
+}
+.navbar-inner {
+max-width: 1200px;
+margin: 0 auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.navbar-brand {
+font-size: 1.25rem;
+font-weight: 800;
+background: linear-gradient(135deg, #f59e0b, #f97316);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+text-decoration: none;
+}
+.badge {
+background: rgba(239,68,68,0.15);
+color: #ef4444;
+padding: 4px 10px;
+border-radius: 12px;
+font-size: 0.7rem;
+font-weight: 600;
+}
+.btn {
+padding: 8px 16px;
+background: #16162a;
+border: 1px solid #2a2a40;
+color: #fff;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+}
+.btn-primary {
+background: linear-gradient(135deg, #f59e0b, #f97316);
+color: #000;
+border: none;
+}
+.admin-layout {
+padding: 80px 20px 40px;
+max-width: 1200px;
+margin: 0 auto;
+}
+.admin-header {
+margin-bottom: 24px;
+}
+.admin-title {
+font-size: 1.5rem;
+font-weight: 800;
+margin-bottom: 8px;
+}
+.admin-subtitle {
+color: #6b6b80;
+font-size: 0.85rem;
+}
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+gap: 16px;
+margin-bottom: 24px;
+}
+.stat-card {
+background: #16162a;
+border: 1px solid #2a2a40;
+border-radius: 12px;
+padding: 20px;
+position: relative;
+overflow: hidden;
+}
+.stat-card::after {
+content: '';
+position: absolute;
+top: 0;
+right: 0;
+width: 4px;
+height: 100%;
+background: linear-gradient(135deg, #f59e0b, #f97316);
+}
+.stat-value {
+font-size: 1.75rem;
+font-weight: 800;
+margin-bottom: 4px;
+}
+.stat-label {
+font-size: 0.8rem;
+color: #6b6b80;
+}
+.table-container {
+background: #16162a;
+border: 1px solid #2a2a40;
+border-radius: 16px;
+overflow: hidden;
+margin-bottom: 24px;
+}
+.table-header {
+padding: 16px 20px;
+border-bottom: 1px solid #2a2a40;
+font-weight: 700;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 12px;
+}
+.table-search {
+display: flex;
+align-items: center;
+gap: 8px;
+background: #0a0a0f;
+border: 1px solid #2a2a40;
+border-radius: 8px;
+padding: 8px 12px;
+min-width: 250px;
+}
+.table-search input {
+background: none;
+border: none;
+color: #fff;
+font-size: 0.85rem;
+outline: none;
+width: 100%;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+}
+th {
+text-align: right;
+padding: 12px 16px;
+font-size: 0.75rem;
+font-weight: 700;
+color: #6b6b80;
+text-transform: uppercase;
+border-bottom: 1px solid #2a2a40;
+background: #0a0a0f;
+}
+td {
+padding: 12px 16px;
+font-size: 0.85rem;
+border-bottom: 1px solid #2a2a40;
+}
+tr:hover td {
+background: #0a0a0f;
+}
+.table-user-cell {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.table-avatar {
+width: 32px;
+height: 32px;
+border-radius: 50%;
+background: linear-gradient(135deg, #f59e0b, #f97316);
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+font-size: 0.75rem;
+color: #000;
+}
+.table-user-name { font-weight: 600; }
+.table-user-email { font-size: 0.75rem; color: #6b6b80; }
+.table-action-btn {
+width: 32px;
+height: 32px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: none;
+background: #0a0a0f;
+color: #a0a0b8;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.2s;
+font-size: 0.9rem;
+}
+.table-action-btn:hover {
+background: #f59e0b;
+color: #000;
+}
+.table-action-btn.danger:hover {
+background: #ef4444;
+color: #fff;
+}
+.badge-status {
+padding: 4px 10px;
+border-radius: 20px;
+font-size: 0.75rem;
+font-weight: 600;
+}
+.badge-active {
+background: rgba(16,185,129,0.15);
+color: #10b981;
+}
+.badge-disabled {
+background: rgba(239,68,68,0.15);
+color: #ef4444;
+}
+.badge-plan {
+padding: 4px 10px;
+border-radius: 20px;
+font-size: 0.75rem;
+font-weight: 600;
+}
+.badge-lifetime {
+background: rgba(245,158,11,0.15);
+color: #f59e0b;
+}
+.badge-trial {
+background: rgba(59,130,246,0.15);
+color: #3b82f6;
+}
+.modal-overlay {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.7);
+backdrop-filter: blur(4px);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 2000;
+padding: 20px;
+}
+.modal {
+background: #16162a;
+border: 1px solid #2a2a40;
+border-radius: 24px;
+max-width: 520px;
+width: 100%;
+max-height: 90vh;
+overflow-y: auto;
+}
+.modal-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 20px 24px;
+border-bottom: 1px solid #2a2a40;
+}
+.modal-title {
+font-size: 1.15rem;
+font-weight: 700;
+}
+.modal-close {
+width: 32px;
+height: 32px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: none;
+background: #0a0a0f;
+color: #a0a0b8;
+border-radius: 8px;
+cursor: pointer;
+}
+.modal-body { padding: 24px; }
+.modal-footer {
+display: flex;
+gap: 12px;
+padding: 16px 24px;
+border-top: 1px solid #2a2a40;
+}
+.form-group {
+margin-bottom: 16px;
+}
+.form-label {
+display: block;
+font-size: 0.875rem;
+font-weight: 600;
+color: #a0a0b8;
+margin-bottom: 6px;
+}
+.form-input {
+width: 100%;
+padding: 12px 16px;
+background: #0a0a0f;
+border: 1px solid #2a2a40;
+border-radius: 8px;
+color: #fff;
+font-size: 1rem;
+}
+.form-input:focus {
+outline: none;
+border-color: #f59e0b;
+}
+.success-state { text-align: center; padding: 20px; }
+.success-icon {
+width: 64px;
+height: 64px;
+background: rgba(16,185,129,0.15);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2rem;
+color: #10b981;
+margin: 0 auto 16px;
+}
+.access-code-display {
+background: #0a0a0f;
+border: 2px dashed #f59e0b;
+border-radius: 12px;
+padding: 20px;
+text-align: center;
+margin: 16px 0;
+}
+.access-code-value {
+font-size: 1.5rem;
+font-weight: 800;
+font-family: 'Courier New', monospace;
+color: #f59e0b;
+letter-spacing: 2px;
+margin-bottom: 12px;
+}
+@media (max-width: 768px) {
+.table-container { overflow-x: auto; }
+table { min-width: 700px; }
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+<div class="navbar-inner">
+<a href="index.html" class="navbar-brand">
+Ibrah.ai <span class="badge">ADMIN</span>
+</a>
+<button class="btn" onclick="handleLogout()">خروج</button>
+</div>
+</nav>
+
+<div class="admin-layout">
+<div class="admin-header">
+<h1 class="admin-title">لوحة تحكم المدير</h1>
+<p class="admin-subtitle">إدارة المشتركين والمدفوعات</p>
+</div>
+
+<div class="stats-grid">
+<div class="stat-card">
+<div class="stat-value" id="totalUsers">4</div>
+<div class="stat-label">إجمالي المشتركين</div>
+</div>
+<div class="stat-card">
+<div class="stat-value" style="color:#10b981;" id="activeUsers">3</div>
+<div class="stat-label">مشتركين نشطين</div>
+</div>
+<div class="stat-card">
+<div class="stat-value" style="color:#f59e0b;" id="lifetimeUsers">2</div>
+<div class="stat-label">Lifetime</div>
+</div>
+<div class="stat-card">
+<div class="stat-value" style="color:#3b82f6;" id="trialUsers">2</div>
+<div class="stat-label">تجريبي</div>
+</div>
+</div>
+
+<div class="table-container">
+<div class="table-header">
+<h3>المشتركين</h3>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+<div class="table-search">
+<span>🔍</span>
+<input type="text" placeholder="بحث..." id="adminSearch" oninput="filterTable()">
+</div>
+<button class="btn btn-primary" onclick="openCreateModal()">➕ إضافة مشترك</button>
+</div>
+</div>
+<div style="overflow-x:auto;">
+<table>
+<thead>
+<tr>
+<th>المستخدم</th>
+<th>كود الوصول</th>
+<th>الخطة</th>
+<th>الحالة</th>
+<th>الأيام</th>
+<th>إجراءات</th>
+</tr>
+</thead>
+<tbody id="usersBody">
+<!-- Populated by JavaScript -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="modalContainer"></div>
+
+<script>
+// Mock data
+let users = [
+{ id: 'u1', name: 'أحمد محمد', email: 'ahmed@example.com', phone: '+96171123456', code: 'IBRAH-9K2X8P', plan: 'lifetime', status: 'active', created_at: '2025-01-15', expires_at: null, last_login: '2025-06-01' },
+{ id: 'u2', name: 'فاطمة علي', email: 'fatima@example.com', phone: '+96181654321', code: 'IBRAH-3M7N1Q', plan: 'trial', status: 'active', created_at: '2025-06-01', expires_at: '2025-06-04', last_login: '2025-06-01' },
+{ id: 'u3', name: 'محمد حسن', email: 'mohammad@example.com', phone: '+96170111222', code: 'IBRAH-5T8R2W', plan: 'trial', status: 'active', created_at: '2025-05-28', expires_at: '2025-05-31', last_login: '2025-05-31' },
+{ id: 'u4', name: 'نور الدين', email: 'nour@example.com', phone: '+96176333444', code: 'IBRAH-7P4K9L', plan: 'lifetime', status: 'disabled', created_at: '2025-02-20', expires_at: null, last_login: '2025-04-10' }
+ ];
+
+function renderUsers() {
+const tbody = document.getElementById('usersBody');
+tbody.innerHTML = users.map(u => {
+const rd = u.plan === 'lifetime' ? '∞' : Math.max(0, Math.ceil((new Date(u.expires_at) - new Date()) / 86400000));
+const rc = rd === '∞' ? '#f59e0b' : (rd <= 0 ? '#ef4444' : rd <= 1 ? '#f59e0b' : '#10b981');
+const initials = u.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+
+return &lt;tr data-name="${u.name}" data-email="${u.email}" data-plan="${u.plan}" data-status="${u.status}"&gt; &lt;td&gt; &lt;div class="table-user-cell"&gt; &lt;div class="table-avatar"&gt;${initials}</div>
+<div>
+<div class="table-user-name">${u.name}&lt;/div&gt; &lt;div class="table-user-email"&gt;${u.email}</div>
+</div>
+</div>
+</td>
+<td>
+<code style="background:#0a0a0f;padding:4px 8px;border-radius:4px;font-size:0.8rem;color:#f59e0b;">${u.code}&lt;/code&gt; &lt;button onclick="copyText('${u.code}')" style="background:none;border:none;color:#f59e0b;cursor:pointer;">📋</button>
+</td>
+<td>
+<span class="badge-plan ${u.plan === 'lifetime' ? 'badge-lifetime' : 'badge-trial'}"&gt; ${u.plan === 'lifetime' ? '✨ Lifetime' : '🔄 تجريبي'}
+</span>
+</td>
+<td>
+<span class="badge-status ${u.status === 'active' ? 'badge-active' : 'badge-disabled'}"&gt; ${u.status === 'active' ? '✓ نشط' : '✕ معطّل'}
+</span>
+</td>
+<td style="font-weight:600;color:${rc};"&gt; ${rd === '∞' ? '∞' : rd + ' يوم'}
+</td>
+<td>
+<div style="display:flex;gap:4px;">
+${u.plan === 'trial' ?<button class="table-action-btn" title="ترقية" onclick="upgradeUser('latex
+{u.id}')"&gt;👑&lt;/button>` : ''} &lt;button class="table-action-btn" title="
+
+{u.status === 'active' ? 'تعطيل' : 'تفعيل'}" onclick="toggleStatus('{u.status === 'active' ? '🚫' : '✓'}
+</button>
+<button class="table-action-btn danger" title="حذف" onclick="deleteUser('${u.id}')"&gt;🗑️&lt;/button&gt; &lt;/div&gt; &lt;/td&gt; &lt;/tr&gt;;
+}).join('');
+
+updateStats();
+}
+
+function updateStats() {
+document.getElementById('totalUsers').textContent = users.length;
+document.getElementById('activeUsers').textContent = users.filter(u => u.status === 'active').length;
+document.getElementById('lifetimeUsers').textContent = users.filter(u => u.plan === 'lifetime').length;
+document.getElementById('trialUsers').textContent = users.filter(u => u.plan === 'trial').length;
+}
+
+function filterTable() {
+const search = document.getElementById('adminSearch').value.toLowerCase();
+document.querySelectorAll('#usersBody tr').forEach(row => {
+const name = row.dataset.name?.toLowerCase() || '';
+const email = row.dataset.email?.toLowerCase() || '';
+row.style.display = (!search || name.includes(search) || email.includes(search)) ? '' : 'none';
+});
+}
+
+function copyText(text) {
+navigator.clipboard.writeText(text).then(() => {
+alert('تم النسخ: ' + text);
+});
+}
+
+function upgradeUser(id) {
+if (!confirm('ترقية هذا المستخدم إلى Lifetime؟')) return;
+const user = users.find(u => u.id === id);
+if (user) {
+user.plan = 'lifetime';
+user.expires_at = null;
+user.status = 'active';
+renderUsers();
+alert('تم الترقية إلى Lifetime ✨');
+}
+}
+
+function toggleStatus(id) {
+const user = users.find(u => u.id === id);
+if (user) {
+user.status = user.status === 'active' ? 'disabled' : 'active';
+renderUsers();
+alert(تم${user.status === 'active' ? 'تفعيل' : 'تعطيل'} المستخدم`);
+}
+}
+
+function deleteUser(id) {
+if (!confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return;
+users = users.filter(u => u.id !== id);
+renderUsers();
+alert('تم حذف المستخدم');
+}
+
+function openCreateModal() {
+document.getElementById('modalContainer').innerHTML = &lt;div class="modal-overlay" onclick="if(event.target===this)closeModal()"&gt; &lt;div class="modal"&gt; &lt;div class="modal-header"&gt; &lt;h3 class="modal-title"&gt;➕ إضافة مشترك جديد&lt;/h3&gt; &lt;button class="modal-close" onclick="closeModal()"&gt;✕&lt;/button&gt; &lt;/div&gt; &lt;div class="modal-body"&gt; &lt;div id="createForm"&gt; &lt;div class="form-group"&gt; &lt;label class="form-label"&gt;الاسم الكامل *&lt;/label&gt; &lt;input type="text" class="form-input" id="nuName" placeholder="الاسم الكامل"&gt; &lt;/div&gt; &lt;div class="form-group"&gt; &lt;label class="form-label"&gt;البريد الإلكتروني *&lt;/label&gt; &lt;input type="email" class="form-input" id="nuEmail" placeholder="email@example.com"&gt; &lt;/div&gt; &lt;div class="form-group"&gt; &lt;label class="form-label"&gt;رقم الهاتف&lt;/label&gt; &lt;input type="tel" class="form-input" id="nuPhone" placeholder="+961 XX XXX XXX"&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id="createSuccess" style="display:none;"&gt; &lt;div class="success-state"&gt; &lt;div class="success-icon"&gt;✓&lt;/div&gt; &lt;h3 style="margin-bottom:8px;"&gt;تم إنشاء الحساب بنجاح!&lt;/h3&gt; &lt;p style="color:#a0a0b8;font-size:0.85rem;margin-bottom:16px;"&gt;كود الوصول:&lt;/p&gt; &lt;div class="access-code-display"&gt; &lt;div class="access-code-value" id="newCode"&gt;IBRAH-XXXXXX&lt;/div&gt; &lt;button class="btn" onclick="copyText(document.getElementById('newCode').textContent)"&gt;📋 نسخ الكود&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class="modal-footer" id="createFooter"&gt; &lt;button class="btn btn-primary" onclick="handleCreate()"&gt;🚀 إنشاء الحساب&lt;/button&gt; &lt;button class="btn" onclick="closeModal()"&gt;إلغاء&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt;;
+}
+
+function handleCreate() {
+const name = document.getElementById('nuName').value.trim();
+const email = document.getElementById('nuEmail').value.trim();
+const phone = document.getElementById('nuPhone').value.trim();
+
+if (!name || !email) {
+alert('الرجاء ملء الحقول المطلوبة');
+return;
+}
+
+const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+let code = 'IBRAH-';
+for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+
+const newUser = {
+id: 'u' + Date.now(),
+name,
+email,
+phone,
+code,
+plan: 'trial',
+status: 'active',
+created_at: new Date().toISOString().split('T')[0],
+expires_at: new Date(Date.now() + 3 * 86400000).toISOString().split('T')[0],
+last_login: null
+};
+
+users.push(newUser);
+
+document.getElementById('createForm').style.display = 'none';
+document.getElementById('createSuccess').style.display = 'block';
+document.getElementById('newCode').textContent = code;
+document.getElementById('createFooter').innerHTML = &lt;button class="btn btn-primary" onclick="openCreateModal()"&gt;➕ إضافة آخر&lt;/button&gt; &lt;button class="btn" onclick="closeModal()"&gt;إغلاق&lt;/button&gt;;
+
+renderUsers();
+alert('تم إنشاء الحساب بنجاح! 🎉');
+}
+
+function closeModal() {
+document.getElementById('modalContainer').innerHTML = '';
+}
+
+function handleLogout() {
+alert('خروج');
+window.location.href = 'index.html';
+}
+
+renderUsers();
+</script>
+</body>
+</html>
