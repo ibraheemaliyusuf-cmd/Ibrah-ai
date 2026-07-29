@@ -1,0 +1,1 @@
+export const API_URL = "https://ibrah-ai-api.ibraheemaliyusuf.workers.dev";
