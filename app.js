@@ -1,28 +1,18 @@
 import {
-
-loginGoogle,
-authState
-
+  loginGoogle,
+  authState
 } from "./auth.js";
 
-const login=document.getElementById("googleLogin");
+const login = document.getElementById("googleLogin");
 
-if(login){
-
-login.onclick=()=>{
-
-loginGoogle();
-
-};
-
+if (login) {
+  login.onclick = () => {
+    loginGoogle();
+  };
 }
 
-authState(user=>{
-
-if(user){
-
-console.log("Logged:",user.email);
-
-}
-
+authState(user => {
+  if (user) {
+    window.location.href = "dashboard.html";
+  }
 });
