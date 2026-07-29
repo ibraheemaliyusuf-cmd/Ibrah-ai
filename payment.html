@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدفع | Ibrah.ai</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+background: #0a0a0f;
+color: #fff;
+min-height: 100vh;
+padding: 20px;
+}
+.payment-page {
+max-width: 520px;
+margin: 40px auto;
+}
+.payment-card {
+background: #16162a;
+border: 1px solid #2a2a40;
+border-radius: 24px;
+padding: 40px;
+}
+.payment-header {
+text-align: center;
+margin-bottom: 24px;
+}
+.payment-icon {
+font-size: 2.5rem;
+margin-bottom: 8px;
+}
+.payment-title {
+font-size: 1.25rem;
+font-weight: 800;
+margin-bottom: 8px;
+}
+.payment-subtitle {
+color: #a0a0b8;
+font-size: 0.85rem;
+}
+.info-box {
+background: #0a0a0f;
+border: 1px solid #2a2a40;
+border-radius: 12px;
+padding: 16px;
+margin-bottom: 16px;
+}
+.info-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 8px 0;
+}
+.info-row:not(:last-child) {
+border-bottom: 1px solid #2a2a40;
+}
+.info-label {
+font-size: 0.85rem;
+color: #6b6b80;
+}
+.info-value {
+font-weight: 600;
+font-size: 0.9rem;
+}
+.payment-steps {
+display: flex;
+flex-direction: column;
+gap: 12px;
+margin-bottom: 20px;
+}
+.payment-step {
+display: flex;
+align-items: flex-start;
+gap: 12px;
+padding: 12px;
+background: #0a0a0f;
+border-radius: 12px;
+}
+.payment-step-num {
+width: 28px;
+height: 28px;
+min-width: 28px;
+background: linear-gradient(135deg, #f59e0b, #f97316);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+font-size: 0.8rem;
+color: #000;
+}
+.payment-step-text {
+font-size: 0.85rem;
+color: #a0a0b8;
+line-height: 1.6;
+}
+.form-group {
+margin-bottom: 16px;
+}
+.form-label {
+display: block;
+font-size: 0.875rem;
+font-weight: 600;
+color: #a0a0b8;
+margin-bottom: 6px;
+}
+.form-input {
+width: 100%;
+padding: 12px 16px;
+background: #0a0a0f;
+border: 1px solid #2a2a40;
+border-radius: 8px;
+color: #fff;
+font-size: 1rem;
+}
+.form-input:focus {
+outline: none;
+border-color: #f59e0b;
+}
+.form-hint {
+font-size: 0.75rem;
+color: #6b6b80;
+margin-top: 4px;
+}
+.btn {
+width: 100%;
+padding: 12px 24px;
+border: none;
+border-radius: 8px;
+font-size: 1rem;
+font-weight: 600;
+cursor: pointer;
+background: linear-gradient(135deg, #f59e0b, #f97316);
+color: #000;
+}
+.btn:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+}
+.btn-secondary {
+background: #16162a;
+color: #fff;
+border: 1px solid #2a2a40;
+margin-top: 12px;
+}
+.success-state {
+text-align: center;
+padding: 20px;
+}
+.success-icon {
+width: 64px;
+height: 64px;
+background: rgba(16,185,129,0.15);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2rem;
+color: #10b981;
+margin: 0 auto 16px;
+}
+.badge {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+padding: 4px 10px;
+border-radius: 20px;
+font-size: 0.75rem;
+font-weight: 600;
+}
+.badge-warning {
+background: rgba(245,158,11,0.15);
+color: #f59e0b;
+}
+.hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="payment-page">
+<div class="payment-card">
+<!-- Payment Info -->
+<div id="paymentForm">
+<div class="payment-header">
+<div class="payment-icon">💛</div>
+<h2 class="payment-title">الدفع عبر Wish Money</h2>
+<p class="payment-subtitle">طريقة دفع محلية سريعة وآمنة 🇱🇧</p>
+</div>
+
+<div class="info-box">
+<div class="info-row">
+<span class="info-label">الخطة</span>
+<span class="info-value">Ibrah.ai Lifetime</span>
+</div>
+<div class="info-row">
+<span class="info-label">المدة</span>
+<span class="info-value">مدى الحياة + 3 أيام تجربة</span>
+</div>
+<div class="info-row">
+<span class="info-label">المبلغ الإجمالي</span>
+<span class="info-value" style="color:#f59e0b;font-size:1.25rem;">$`9</span>
+</div>
+</div>
+
+<div style="margin-bottom:20px;">
+<h4 style="font-size:0.9rem;font-weight:700;margin-bottom:12px;">📱 معلومات التحويل</h4>
+<div class="info-box">
+<div class="info-row">
+<span class="info-label">رقم الحساب</span>
+<span class="info-value">30575876-03</span>
+</div>
+<div class="info-row">
+<span class="info-label">الاسم الكامل</span>
+<span class="info-value">Iman Al Fayad</span>
+</div>
+<div class="info-row">
+<span class="info-label">رقم الهاتف</span>
+<span class="info-value">+961 76 177 091</span>
+</div>
+<div class="info-row">
+<span class="info-label">المبلغ المطلوب</span>
+<span class="info-value" style="color:#f59e0b;">`$9</span>
+</div>
+</div>
+</div>
+
+<div style="margin-bottom:20px;">
+<h4 style="font-size:0.9rem;font-weight:700;margin-bottom:12px;"> خطوات الدفع</h4>
+<div class="payment-steps">
+<div class="payment-step">
+<div class="payment-step-num">1</div>
+<div class="payment-step-text">افتح تطبيق <strong>Wish Money</strong></div>
+</div>
+<div class="payment-step">
+<div class="payment-step-num">2</div>
+<div class="payment-step-text">اختر <strong>"إرسال أموال"</strong> وأدخل الرقم أعلاه</div>
+</div>
+<div class="payment-step">
+<div class="payment-step-num">3</div>
+<div class="payment-step-text">أرسل المبلغ: <strong>$`9</strong></div>
+</div>
+<div class="payment-step">
+<div class="payment-step-num">4</div>
+<div class="payment-step-text">احتفظ بـ <strong>رقم العملية</strong> (Reference) من الإيصال</div>
+</div>
+</div>
+</div>
+
+<label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:20px;font-size:0.85rem;color:#a0a0b8;">
+<input type="checkbox" id="paymentCompleteCheck" style="width:18px;height:18px;accent-color:#f59e0b;">
+✅ أكملت التحويل
+</label>
+
+<button class="btn" id="proceedToConfirmBtn" onclick="showConfirmForm()" disabled>
+✅ أكملت التحويل — متابعة
+</button>
+
+<div style="text-align:center;margin-top:16px;">
+<p style="font-size:0.8rem;color:#6b6b80;">
+💬 تحتاج مساعدة؟
+<a href="https://wa.me/96176177091" target="_blank" style="color:#f59e0b;text-decoration:none;">تواصل عبر واتساب</a>
+</p>
+</div>
+</div>
+
+<!-- Confirmation Form -->
+<div id="confirmForm" class="hidden">
+<div class="payment-header">
+<div class="payment-icon">✅</div>
+<h2 class="payment-title">تأكيد التحويل</h2>
+<p class="payment-subtitle">أدخل بياناتك لتفعيل حسابك</p>
+</div>
+
+<div class="form-group">
+<label class="form-label">الاسم الكامل *</label>
+<input type="text" class="form-input" id="payName" placeholder="الاسم الكامل">
+</div>
+<div class="form-group">
+<label class="form-label">البريد الإلكتروني *</label>
+<input type="email" class="form-input" id="payEmail" placeholder="email@example.com">
+<div class="form-hint">📧 سنرسل بيانات الدخول على هذا البريد</div>
+</div>
+<div class="form-group">
+<label class="form-label">رقم الهاتف *</label>
+<input type="tel" class="form-input" id="payPhone" placeholder="+961 XX XXX XXX">
+</div>
+<div class="form-group">
+<label class="form-label">رقم عملية Wish Money (Reference) *</label>
+<input type="text" class="form-input" id="payReference" placeholder="رقم العملية" style="font-family:monospace;">
+<div class="form-hint">💡 تجده في إيصال التحويل أو في سجل العمليات</div>
+</div>
+<div class="form-group">
+<label class="form-label">المبلغ المحوّل</label>
+<input type="text" class="form-input" value="`$9" disabled style="opacity:0.7;">
+</div>
+
+<div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:12px;margin-bottom:20px;font-size:0.8rem;color:#f59e0b;">
+️ وقت التفعيل: خلال 5-30 دقيقة بعد التحقق من التحويل
+</div>
+
+<button class="btn" id="submitPaymentBtn" onclick="submitPayment()">
+🚀 إرسال التأكيد وتفعيل الحساب
+</button>
+
+<button class="btn btn-secondary" onclick="backToPayment()">
+← العودة لمعلومات الدفع
+</button>
+</div>
+
+<!-- Success State -->
+<div id="paymentSuccess" class="hidden">
+<div class="success-state">
+<div class="success-icon">✓</div>
+<h3 style="font-size:1.25rem;font-weight:700;margin-bottom:8px;">تم استلام طلبك بنجاح!</h3>
+<p style="color:#a0a0b8;font-size:0.9rem;margin-bottom:20px;">سنقوم بالتحقق من التحويل وتفعيل حسابك خلال دقائق.</p>
+
+<div class="info-box" style="text-align:right;">
+<div class="info-row">
+<span class="info-label">رقم الطلب</span>
+<span class="info-value" id="orderId" style="font-family:monospace;">#IB-000000</span>
+</div>
+<div class="info-row">
+<span class="info-label">الحالة</span>
+<span class="info-value"><span class="badge badge-warning">⏳ قيد المراجعة</span></span>
+</div>
+<div class="info-row">
+<span class="info-label">المبلغ</span>
+<span class="info-value">$9</span>
+</div>
+<div class="info-row">
+<span class="info-label">الوقت المتوقع</span>
+<span class="info-value">5-30 دقيقة</span>
+</div>
+</div>
+
+<div style="background:#0a0a0f;border-radius:12px;padding:16px;margin:16px 0;text-align:right;">
+<h4 style="font-size:0.85rem;font-weight:700;margin-bottom:8px;">📧 ما التالي؟</h4>
+<p style="font-size:0.8rem;color:#a0a0b8;line-height:1.8;">
+✓ سنرسل لك تأكيد على بريدك الإلكتروني<br>
+✓ ستصلك بيانات الدخول خلال دقائق<br>
+✓ يمكنك التواصل معنا في أي وقت عبر واتساب
+</p>
+</div>
+
+<a href="https://wa.me/96176177091" target="_blank" class="btn" style="margin-bottom:8px;text-decoration:none;">
+💬 تواصل عبر واتساب
+</a>
+<a href="index.html" class="btn btn-secondary" style="text-decoration:none;">
+العودة للرئيسية
+</a>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// Payment Checkbox
+document.getElementById('paymentCompleteCheck').addEventListener('change', (e) => {
+document.getElementById('proceedToConfirmBtn').disabled = !e.target.checked;
+});
+
+// Show Confirm Form
+function showConfirmForm() {
+document.getElementById('paymentForm').classList.add('hidden');
+document.getElementById('confirmForm').classList.remove('hidden');
+}
+
+// Back to Payment
+function backToPayment() {
+document.getElementById('confirmForm').classList.add('hidden');
+document.getElementById('paymentForm').classList.remove('hidden');
+}
+
+// Submit Payment
+function submitPayment() {
+const name = document.getElementById('payName').value.trim();
+const email = document.getElementById('payEmail').value.trim();
+const phone = document.getElementById('payPhone').value.trim();
+const reference = document.getElementById('payReference').value.trim();
+
+if (!name || !email || !phone || !reference) {
+alert('الرجاء ملء جميع الحقول المطلوبة');
+return;
+}
+
+const btn = document.getElementById('submitPaymentBtn');
+btn.disabled = true;
+btn.innerHTML = '⏳ جاري الإرسال...';
+
+setTimeout(() => {
+document.getElementById('confirmForm').classList.add('hidden');
+document.getElementById('paymentSuccess').classList.remove('hidden');
+document.getElementById('orderId').textContent = '#IB-' + Math.floor(100000 + Math.random() * 900000);
+alert('تم إرسال طلبك بنجاح! ✅');
+}, 1000);
+}
+</script>
+</body>
+</html>
