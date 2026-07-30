@@ -1,78 +1,132 @@
 import { auth, db } from "./firebase.js";
 
 import {
-GoogleAuthProvider,
-signInWithPopup,
-signOut,
-onAuthStateChanged
-
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
 import {
-
-doc,
-getDoc,
-setDoc,
-serverTimestamp
-
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-const provider=new GoogleAuthProvider();
 
-export async function loginGoogle(){
+const provider = new GoogleAuthProvider();
 
-const result=await signInWithPopup(auth,provider);
 
-const user=result.user;
+export async function loginGoogle() {
 
-const ref=doc(db,"users",user.uid);
+  try {
 
-const snap=await getDoc(ref);
+    console.log("1. Starting Google login...");
 
-if(!snap.exists()){
+    const result = await signInWithPopup(auth, provider);
 
-const end=new Date();
+    const user = result.user;
 
-end.setDate(end.getDate()+3);
+    console.log("2. Google login successful");
+    console.log("UID:", user.uid);
+    console.log("Email:", user.email);
 
-await setDoc(ref,{
 
-uid:user.uid,
+    const ref = doc(db, "users", user.uid);
 
-name:user.displayName,
+    console.log("3. Checking Firestore user document...");
 
-email:user.email,
+    const snap = await getDoc(ref);
 
-photo:user.photoURL,
+    console.log("4. Firestore check completed");
+    console.log("Document exists:", snap.exists());
 
-plan:"trial",
 
-status:"active",
+    if (!snap.exists()) {
 
-createdAt:serverTimestamp(),
+      console.log("5. User does not exist. Creating document...");
 
-trialEndsAt:end,
+      const end = new Date();
 
-requests:0,
+      end.setDate(end.getDate() + 3);
 
-history:[]
 
-});
+      await setDoc(ref, {
+
+        uid: user.uid,
+
+        name: user.displayName || "",
+
+        email: user.email || "",
+
+        photo: user.photoURL || "",
+
+        plan: "trial",
+
+        status: "active",
+
+        createdAt: serverTimestamp(),
+
+        trialEndsAt: end,
+
+        requests: 0,
+
+        history: []
+
+      });
+
+
+      console.log("6. SUCCESS: User document created!");
+
+    } else {
+
+      console.log("6. User document already exists.");
+
+    }
+
+
+    console.log("7. Redirecting to dashboard...");
+
+    window.location.href = "dashboard.html";
+
+
+  } catch (error) {
+
+    console.error("================================");
+
+    console.error("AUTH / FIRESTORE ERROR");
+
+    console.error("Error code:", error.code);
+
+    console.error("Error message:", error.message);
+
+    console.error("Full error:", error);
+
+    console.error("================================");
+
+
+    alert(
+      "حدث خطأ:\n\n" +
+      error.code +
+      "\n\n" +
+      error.message
+    );
+
+  }
 
 }
 
-location.href="dashboard.html";
+
+export function logout() {
+
+  return signOut(auth);
 
 }
 
-export function logout(){
 
-return signOut(auth);
+export function authState(callback) {
 
-}
-
-export function authState(callback){
-
-return onAuthStateChanged(auth,callback);
+  return onAuthStateChanged(auth, callback);
 
 }
