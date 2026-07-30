@@ -15,373 +15,247 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 
+// ========================================
+// Google Provider
+// ========================================
+
 const provider = new GoogleAuthProvider();
 
 
-// ==========================================
-// شاشة التشخيص
-// ==========================================
-
-function showDebug(message, type = "info") {
-
-  let box = document.getElementById("firebase-debug-box");
-
-  if (!box) {
-
-    box = document.createElement("div");
-
-    box.id = "firebase-debug-box";
-
-    box.style.position = "fixed";
-    box.style.top = "10px";
-    box.style.left = "10px";
-    box.style.right = "10px";
-    box.style.zIndex = "999999";
-
-    box.style.background = "#111";
-    box.style.color = "#fff";
-
-    box.style.padding = "20px";
-
-    box.style.borderRadius = "12px";
-
-    box.style.fontFamily = "Arial, sans-serif";
-
-    box.style.fontSize = "16px";
-
-    box.style.lineHeight = "1.7";
-
-    box.style.direction = "rtl";
-
-    box.style.boxShadow = "0 5px 30px rgba(0,0,0,0.5)";
-
-    document.body.appendChild(box);
-
-  }
-
-  const line = document.createElement("div");
-
-  if (type === "success") {
-
-    line.style.color = "#00ff88";
-
-  } else if (type === "error") {
-
-    line.style.color = "#ff5555";
-
-  } else {
-
-    line.style.color = "#ffffff";
-
-  }
-
-  line.style.marginBottom = "8px";
-
-  line.textContent = message;
-
-  box.appendChild(line);
-
-}
-
-
-// ==========================================
+// ========================================
 // تسجيل الدخول بواسطة Google
-// ==========================================
+// ========================================
 
 export async function loginGoogle() {
 
-  showDebug("🚀 بدء عملية تسجيل الدخول...");
-
-
   try {
 
-    // ======================================
-    // الخطوة 1: تسجيل الدخول إلى Google
-    // ======================================
+    // ------------------------------------
+    // 1. تسجيل الدخول بواسطة Google
+    // ------------------------------------
 
-    showDebug("1️⃣ جاري فتح تسجيل الدخول بواسطة Google...");
-
-    const result = await signInWithPopup(
-      auth,
-      provider
-    );
-
+    const result = await signInWithPopup(auth, provider);
 
     const user = result.user;
 
-
-    showDebug(
-      "✅ تم تسجيل الدخول إلى Google بنجاح",
-      "success"
-    );
-
-
-    showDebug(
-      "UID: " + user.uid
-    );
+    console.log("================================");
+    console.log("LOGIN SUCCESS");
+    console.log("UID:", user.uid);
+    console.log("NAME:", user.displayName);
+    console.log("EMAIL:", user.email);
+    console.log("================================");
 
 
-    showDebug(
-      "البريد: " + (user.email || "غير موجود")
-    );
+    // ------------------------------------
+    // 2. عرض معلومات تسجيل الدخول
+    // ------------------------------------
 
-
-    // ======================================
-    // الخطوة 2: الوصول إلى Firestore
-    // ======================================
-
-    showDebug(
-      "2️⃣ جاري الاتصال بـ Firestore..."
-    );
-
-
-    const ref = doc(
-      db,
-      "users",
+    alert(
+      "✅ تم تسجيل الدخول بنجاح\n\n" +
+      "الاسم: " +
+      (user.displayName || "") +
+      "\n\n" +
+      "الإيميل: " +
+      (user.email || "") +
+      "\n\n" +
+      "UID:\n" +
       user.uid
     );
 
 
-    showDebug(
-      "مسار المستخدم: users/" + user.uid
-    );
+    // ------------------------------------
+    // 3. إنشاء مرجع المستخدم في Firestore
+    // Collection: users
+    // Document ID: user.uid
+    // ------------------------------------
+
+    const ref = doc(db, "users", user.uid);
 
 
-    // ======================================
-    // الخطوة 3: البحث عن المستخدم
-    // ======================================
+    console.log("Checking Firestore user document...");
 
-    showDebug(
-      "3️⃣ جاري البحث عن وثيقة المستخدم..."
-    );
 
+    // ------------------------------------
+    // 4. البحث عن المستخدم
+    // ------------------------------------
 
     const snap = await getDoc(ref);
 
 
-    showDebug(
-      "✅ تم الاتصال بـ Firestore بنجاح",
-      "success"
-    );
-
-
-    // ======================================
-    // المستخدم غير موجود
-    // ======================================
+    // ------------------------------------
+    // 5. إذا كان المستخدم جديدًا
+    // ------------------------------------
 
     if (!snap.exists()) {
 
-      showDebug(
-        "⚠️ المستخدم غير موجود في Firestore"
-      );
+      console.log("USER DOCUMENT DOES NOT EXIST");
 
-
-      showDebug(
-        "4️⃣ جاري إنشاء وثيقة جديدة في users..."
-      );
-
+      // تاريخ انتهاء التجربة
+      // 3 أيام من تاريخ التسجيل
 
       const end = new Date();
 
-
-      end.setDate(
-        end.getDate() + 3
-      );
+      end.setDate(end.getDate() + 3);
 
 
-      const userData = {
+      // ----------------------------------
+      // إنشاء حساب المستخدم في Firestore
+      // ----------------------------------
+
+      await setDoc(ref, {
 
         uid: user.uid,
 
-        name:
-          user.displayName || "",
+        name: user.displayName || "",
 
-        email:
-          user.email || "",
+        email: user.email || "",
 
-        photo:
-          user.photoURL || "",
+        photo: user.photoURL || "",
 
-        plan:
-          "trial",
+        plan: "trial",
 
-        status:
-          "active",
+        status: "active",
 
-        createdAt:
-          serverTimestamp(),
+        createdAt: serverTimestamp(),
 
-        trialEndsAt:
-          end,
+        trialEndsAt: end,
 
-        requests:
-          0,
+        requests: 0,
 
-        history:
-          []
+        history: []
 
-      };
+      });
 
 
-      await setDoc(
-        ref,
-        userData
+      console.log(
+        "USER DOCUMENT CREATED SUCCESSFULLY"
       );
 
 
-      showDebug(
-        "✅ تم إنشاء المستخدم في Firestore بنجاح",
-        "success"
-      );
+      // ----------------------------------
+      // رسالة نجاح
+      // ----------------------------------
 
-
-      showDebug(
-        "المسار: users/" + user.uid,
-        "success"
+      alert(
+        "✅ ممتاز!\n\n" +
+        "تم تسجيل الدخول بنجاح.\n\n" +
+        "وتم إنشاء المستخدم في Firestore بنجاح.\n\n" +
+        "Collection: users\n\n" +
+        "UID:\n" +
+        user.uid +
+        "\n\n" +
+        "سيتم الانتقال إلى لوحة التحكم بعد 5 ثوانٍ."
       );
 
 
     } else {
 
 
-      // ====================================
+      // ----------------------------------
       // المستخدم موجود مسبقًا
-      // ====================================
+      // ----------------------------------
 
-      showDebug(
-        "ℹ️ وثيقة المستخدم موجودة مسبقًا",
-        "success"
+      console.log(
+        "USER DOCUMENT ALREADY EXISTS"
       );
 
 
-      showDebug(
-        "تم العثور على users/" + user.uid,
-        "success"
+      console.log(
+        "Existing user data:",
+        snap.data()
+      );
+
+
+      alert(
+        "ℹ️ تسجيل الدخول ناجح.\n\n" +
+        "هذا المستخدم موجود مسبقًا في Firestore.\n\n" +
+        "Collection: users\n\n" +
+        "UID:\n" +
+        user.uid +
+        "\n\n" +
+        "سيتم الانتقال إلى لوحة التحكم بعد 5 ثوانٍ."
       );
 
     }
 
 
-    // ======================================
-    // الخطوة 5: الانتقال إلى Dashboard
-    // ======================================
+    // ------------------------------------
+    // 6. انتظار 5 ثوانٍ
+    // ------------------------------------
 
-    showDebug(
-      "5️⃣ اكتملت عملية تسجيل الدخول بنجاح",
-      "success"
+    await new Promise(
+      resolve => setTimeout(resolve, 5000)
     );
 
 
-    showDebug(
-      "⏳ جاري الانتقال إلى لوحة التحكم..."
+    // ------------------------------------
+    // 7. الانتقال إلى Dashboard
+    // ------------------------------------
+
+    console.log(
+      "Redirecting to dashboard.html..."
     );
 
-
-    setTimeout(
-      () => {
-
-        location.href =
-          "dashboard.html";
-
-      },
-      1500
-    );
+    location.href = "dashboard.html";
 
 
   } catch (error) {
 
 
-    // ======================================
-    // في حالة حدوث خطأ
-    // ======================================
+    // ====================================
+    // خطأ في تسجيل الدخول أو Firestore
+    // ====================================
 
     console.error(
-      "AUTH / FIRESTORE ERROR:",
+      "================================"
+    );
+
+    console.error(
+      "AUTH / FIRESTORE ERROR"
+    );
+
+    console.error(
+      "Error code:",
+      error.code
+    );
+
+    console.error(
+      "Error message:",
+      error.message
+    );
+
+    console.error(
+      "Full error:",
       error
     );
 
-
-    showDebug(
-      "❌ حدث خطأ أثناء تسجيل الدخول",
-      "error"
+    console.error(
+      "================================"
     );
 
 
-    showDebug(
-      "رمز الخطأ: " +
-      (error.code || "غير معروف"),
-      "error"
-    );
-
-
-    showDebug(
-      "رسالة الخطأ: " +
-      (error.message || "لا توجد رسالة"),
-      "error"
-    );
-
-
-    // ======================================
-    // رسائل خاصة بالأخطاء الشائعة
-    // ======================================
-
-    if (
-      error.code ===
-      "permission-denied"
-    ) {
-
-      showDebug(
-        "🚨 المشكلة في Firestore Security Rules",
-        "error"
-      );
-
-    }
-
-
-    if (
-      error.code ===
-      "auth/popup-closed-by-user"
-    ) {
-
-      showDebug(
-        "⚠️ تم إغلاق نافذة Google قبل إكمال تسجيل الدخول",
-        "error"
-      );
-
-    }
-
-
-    if (
-      error.code ===
-      "auth/popup-blocked"
-    ) {
-
-      showDebug(
-        "⚠️ المتصفح منع نافذة تسجيل الدخول المنبثقة",
-        "error"
-      );
-
-    }
-
-
-    if (
-      error.code ===
-      "failed-precondition"
-    ) {
-
-      showDebug(
-        "🚨 هناك مشكلة في إعداد Firestore أو المشروع",
-        "error"
-      );
-
-    }
-
+    // ------------------------------------
+    // عرض الخطأ للمستخدم
+    // ------------------------------------
 
     alert(
-      "حدث خطأ أثناء تسجيل الدخول.\n\n" +
-      (error.code || "") +
+
+      "❌ حدث خطأ\n\n" +
+
+      "رمز الخطأ:\n" +
+
+      (error.code || "غير معروف") +
+
       "\n\n" +
-      (error.message || "")
+
+      "رسالة الخطأ:\n" +
+
+      (error.message || "حدث خطأ غير معروف") +
+
+      "\n\n" +
+
+      "افتح Console لمعرفة التفاصيل."
+
     );
 
   }
@@ -389,54 +263,36 @@ export async function loginGoogle() {
 }
 
 
-// ==========================================
+// ========================================
 // تسجيل الخروج
-// ==========================================
+// ========================================
 
 export async function logout() {
 
   try {
 
-    showDebug(
-      "🚪 جاري تسجيل الخروج..."
-    );
-
-
     await signOut(auth);
 
-
-    showDebug(
-      "✅ تم تسجيل الخروج بنجاح",
-      "success"
+    console.log(
+      "LOGOUT SUCCESS"
     );
+
+    // بعد تسجيل الخروج
+    // العودة إلى صفحة تسجيل الدخول
+
+    location.href = "index.html";
 
 
   } catch (error) {
-
 
     console.error(
       "LOGOUT ERROR:",
       error
     );
 
-
-    showDebug(
-      "❌ فشل تسجيل الخروج",
-      "error"
-    );
-
-
-    showDebug(
-      "رمز الخطأ: " +
-      (error.code || "غير معروف"),
-      "error"
-    );
-
-
-    showDebug(
-      "رسالة الخطأ: " +
-      (error.message || "لا توجد رسالة"),
-      "error"
+    alert(
+      "❌ حدث خطأ أثناء تسجيل الخروج\n\n" +
+      error.message
     );
 
   }
@@ -444,15 +300,50 @@ export async function logout() {
 }
 
 
-// ==========================================
+// ========================================
 // مراقبة حالة تسجيل الدخول
-// ==========================================
+// ========================================
 
 export function authState(callback) {
 
   return onAuthStateChanged(
+
     auth,
-    callback
+
+    (user) => {
+
+      if (user) {
+
+        console.log(
+          "AUTH STATE: USER LOGGED IN"
+        );
+
+        console.log(
+          "UID:",
+          user.uid
+        );
+
+        console.log(
+          "EMAIL:",
+          user.email
+        );
+
+      } else {
+
+        console.log(
+          "AUTH STATE: NO USER"
+        );
+
+      }
+
+
+      // إرسال حالة المستخدم
+      // إلى الصفحة التي استدعت authState
+
+      callback(user);
+
+    }
+
   );
 
-        }
+}
