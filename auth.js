@@ -22,35 +22,23 @@ export async function loginGoogle() {
 
   try {
 
-    console.log("1. Starting Google login...");
-
     const result = await signInWithPopup(auth, provider);
 
     const user = result.user;
 
-    console.log("2. Google login successful");
-    console.log("UID:", user.uid);
-    console.log("Email:", user.email);
-
+    console.log("LOGIN SUCCESS:", user.uid);
 
     const ref = doc(db, "users", user.uid);
 
-    console.log("3. Checking Firestore user document...");
-
     const snap = await getDoc(ref);
-
-    console.log("4. Firestore check completed");
-    console.log("Document exists:", snap.exists());
-
 
     if (!snap.exists()) {
 
-      console.log("5. User does not exist. Creating document...");
+      console.log("USER DOCUMENT DOES NOT EXIST");
 
       const end = new Date();
 
       end.setDate(end.getDate() + 3);
-
 
       await setDoc(ref, {
 
@@ -76,20 +64,15 @@ export async function loginGoogle() {
 
       });
 
-
-      console.log("6. SUCCESS: User document created!");
+      console.log("USER DOCUMENT CREATED SUCCESSFULLY");
 
     } else {
 
-      console.log("6. User document already exists.");
+      console.log("USER DOCUMENT ALREADY EXISTS");
 
     }
 
-
-    console.log("7. Redirecting to dashboard...");
-
-    window.location.href = "dashboard.html";
-
+    location.href = "dashboard.html";
 
   } catch (error) {
 
