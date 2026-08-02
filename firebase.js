@@ -1,27 +1,54 @@
+// ============================================
+// IBRAH AI - Firebase Configuration
+// ============================================
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import {
+  getAuth
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+import {
+  getFirestore
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-const firebaseConfig={
+// ============================================
+// Firebase Project Configuration
+// ============================================
 
-apiKey:"AIzaSyBJKLVKrj-4QG__eobMZBNzygiYlDzkv9Y",
-
-authDomain:"ibrah-ai.firebaseapp.com",
-
-projectId:"ibrah-ai",
-
-storageBucket:"ibrah-ai.firebasestorage.app",
-
-messagingSenderId:"8866295227",
-
-appId:"1:8866295227:web:3c7f78864da6ecdfad689e"
-
+const firebaseConfig = {
+  apiKey: "AIzaSyBJKLVKrj-4QG__eobMZBNzygiYlDzky9Y",
+  authDomain: "ibrah-ai.firebaseapp.com",
+  projectId: "ibrah-ai",
+  storageBucket: "ibrah-ai.firebasestorage.app",
+  messagingSenderId: "8866295227",
+  appId: "1:8866295227:web:3c7f78864da6ecdfad689e"
 };
 
-const app=initializeApp(firebaseConfig);
 
-export const auth=getAuth(app);
+// ============================================
+// Initialize Firebase
+// ============================================
 
-export const db=getFirestore(app);
+const app = initializeApp(firebaseConfig);
+
+
+// ============================================
+// Firebase Authentication
+// ============================================
+
+export const auth = getAuth(app);
+
+
+// ============================================
+// Cloud Firestore
+// ============================================
+
+export const db = getFirestore(app);
+
+
+// ============================================
+// Export Firebase App
+// ============================================
+
+export { app };

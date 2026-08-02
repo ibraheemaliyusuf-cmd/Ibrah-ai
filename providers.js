@@ -1,56 +1,74 @@
-import { APP } from "./config.js";
 import { registerProvider } from "./ai-router.js";
 
-async function openRouter(prompt){
+/*
+========================================
+IBRAH AI
+AI Provider Registry
+========================================
 
-const response = await fetch("https://openrouter.ai/api/v1/chat/completions",{
+هذا الملف لا يحتوي على أي API KEY.
 
-method:"POST",
+المتصفح لا يتصل مباشرة بـ OpenRouter.
 
-headers:{
+جميع الطلبات تمر عبر:
+Frontend
+    ↓
+/api/chat
+    ↓
+Cloudflare Worker / Backend
+    ↓
+AI Provider
+*/
 
-"Authorization":"Bearer "+APP.OPENROUTER_API_KEY,
+async function workerProvider(prompt, context = {}) {
+  const response = await fetch("/api/chat", {
+    method: "POST",
 
-"Content-Type":"application/json"
+    headers: {
+      "Content-Type": "application/json"
+    },
 
-},
+    body: JSON.stringify({
+      prompt,
+      context
+    })
+  });
 
-body:JSON.stringify({
+  if (!response.ok) {
+    let errorMessage = "حدث خطأ أثناء الاتصال بخدمة الذكاء الاصطناعي.";
 
-model:APP.MODEL,
+    try {
+      const errorData = await response.json();
 
-messages:[
+      if (errorData?.message) {
+        errorMessage = errorData.message;
+      }
+    } catch (error) {
+      console.error(
+        "WORKER ERROR RESPONSE PARSE ERROR:",
+        error
+      );
+    }
 
-{
+    throw new Error(errorMessage);
+  }
 
-role:"user",
+  const data = await response.json();
 
-content:prompt
+  if (
+    !data ||
+    typeof data.answer !== "string" ||
+    data.answer.trim().length === 0
+  ) {
+    throw new Error(
+      "استجابة غير صالحة من خادم الذكاء الاصطناعي."
+    );
+  }
 
+  return {
+    provider: data.provider || "IBRAH AI",
+    answer: data.answer
+  };
 }
 
-]
-
-})
-
-});
-
-if(!response.ok){
-
-throw new Error("OpenRouter Error");
-
-}
-
-const json=await response.json();
-
-return{
-
-provider:"OpenRouter",
-
-answer:json.choices[0].message.content
-
-};
-
-}
-
-registerProvider(openRouter);
+registerProvider(workerProvider);

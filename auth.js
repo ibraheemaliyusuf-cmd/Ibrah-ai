@@ -1,78 +1,330 @@
 import { auth, db } from "./firebase.js";
 
 import {
-GoogleAuthProvider,
-signInWithPopup,
-signOut,
-onAuthStateChanged
-
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
 import {
-
-doc,
-getDoc,
-setDoc,
-serverTimestamp
-
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-const provider=new GoogleAuthProvider();
 
-export async function loginGoogle(){
+// ========================================
+// Google Provider
+// ========================================
 
-const result=await signInWithPopup(auth,provider);
+const provider =
+  new GoogleAuthProvider();
 
-const user=result.user;
 
-const ref=doc(db,"users",user.uid);
+// ========================================
+// مدة التجربة المجانية
+// ========================================
 
-const snap=await getDoc(ref);
+const TRIAL_DAYS = 3;
 
-if(!snap.exists()){
 
-const end=new Date();
+// ========================================
+// تسجيل الدخول بواسطة Google
+// ========================================
 
-end.setDate(end.getDate()+3);
+export async function loginGoogle() {
 
-await setDoc(ref,{
+  try {
 
-uid:user.uid,
+    // ------------------------------------
+    // تسجيل الدخول عبر Google
+    // ------------------------------------
 
-name:user.displayName,
+    const result =
+      await signInWithPopup(
+        auth,
+        provider
+      );
 
-email:user.email,
 
-photo:user.photoURL,
+    const user =
+      result.user;
 
-plan:"trial",
 
-status:"active",
+    console.log(
+      "Google Login Success:",
+      user.uid
+    );
 
-createdAt:serverTimestamp(),
 
-trialEndsAt:end,
+    // ------------------------------------
+    // مرجع المستخدم في Firestore
+    // ------------------------------------
 
-requests:0,
+    const userRef =
+      doc(
+        db,
+        "users",
+        user.uid
+      );
 
-history:[]
 
-});
+    // ------------------------------------
+    // البحث عن المستخدم
+    // ------------------------------------
+
+    const userSnap =
+      await getDoc(
+        userRef
+      );
+
+
+    // ------------------------------------
+    // إنشاء المستخدم لأول مرة
+    // ------------------------------------
+
+    if (
+      !userSnap.exists()
+    ) {
+
+      const trialEnd =
+        new Date();
+
+
+      trialEnd.setDate(
+        trialEnd.getDate() +
+        TRIAL_DAYS
+      );
+
+
+      await setDoc(
+        userRef,
+        {
+
+          uid:
+            user.uid,
+
+          name:
+            user.displayName ||
+            "",
+
+          email:
+            user.email ||
+            "",
+
+          photo:
+            user.photoURL ||
+            "",
+
+          plan:
+            "trial",
+
+          status:
+            "active",
+
+          createdAt:
+            serverTimestamp(),
+
+          trialEndsAt:
+            trialEnd,
+
+          requests:
+            0,
+
+          history:
+            []
+
+        }
+      );
+
+
+      console.log(
+        "New user created:",
+        user.uid
+      );
+
+    } else {
+
+      console.log(
+        "Existing user:",
+        user.uid
+      );
+
+    }
+
+
+    // ------------------------------------
+    // الانتقال مباشرة إلى Dashboard
+    // ------------------------------------
+
+    window.location.href =
+      "dashboard.html";
+
+
+  } catch (
+    error
+  ) {
+
+    console.error(
+      "AUTH / FIRESTORE ERROR:",
+      error
+    );
+
+
+    // ------------------------------------
+    // أخطاء تسجيل الدخول
+    // ------------------------------------
+
+    let message =
+      "حدث خطأ أثناء تسجيل الدخول.";
+
+
+    if (
+      error.code ===
+      "auth/popup-closed-by-user"
+    ) {
+
+      message =
+        "تم إغلاق نافذة تسجيل الدخول.";
+
+    }
+
+
+    if (
+      error.code ===
+      "auth/popup-blocked"
+    ) {
+
+      message =
+        "تم حظر نافذة تسجيل الدخول. اسمح بالنوافذ المنبثقة ثم حاول مرة أخرى.";
+
+    }
+
+
+    if (
+      error.code ===
+      "auth/cancelled-popup-request"
+    ) {
+
+      message =
+        "تم إلغاء عملية تسجيل الدخول.";
+
+    }
+
+
+    if (
+      error.code ===
+      "permission-denied"
+    ) {
+
+      message =
+        "ليس لديك صلاحية الوصول إلى بيانات الحساب.";
+
+    }
+
+
+    alert(
+      "❌ " +
+      message
+    );
+
+  }
 
 }
 
-location.href="dashboard.html";
+
+// ========================================
+// تسجيل الخروج
+// ========================================
+
+export async function logout() {
+
+  try {
+
+    await signOut(
+      auth
+    );
+
+
+    console.log(
+      "Logout Success"
+    );
+
+
+    // العودة إلى صفحة تسجيل الدخول
+
+    window.location.href =
+      "login.html";
+
+
+  } catch (
+    error
+  ) {
+
+    console.error(
+      "LOGOUT ERROR:",
+      error
+    );
+
+
+    alert(
+      "❌ حدث خطأ أثناء تسجيل الخروج."
+    );
+
+  }
 
 }
 
-export function logout(){
 
-return signOut(auth);
+// ========================================
+// مراقبة حالة تسجيل الدخول
+// ========================================
 
-}
+export function authState(
+  callback
+) {
 
-export function authState(callback){
+  return onAuthStateChanged(
 
-return onAuthStateChanged(auth,callback);
+    auth,
+
+    (
+      user
+    ) => {
+
+      if (
+        user
+      ) {
+
+        console.log(
+          "AUTH STATE: USER LOGGED IN",
+          user.uid
+        );
+
+      } else {
+
+        console.log(
+          "AUTH STATE: NO USER"
+        );
+
+      }
+
+
+      if (
+        typeof callback ===
+        "function"
+      ) {
+
+        callback(
+          user
+        );
+
+      }
+
+    }
+
+  );
 
 }
