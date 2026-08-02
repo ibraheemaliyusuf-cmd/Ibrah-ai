@@ -3,83 +3,723 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>Ibrah AI Dashboard</title>
+  <meta
+    name="theme-color"
+    content="#0b1020"
+  >
 
-<link rel="stylesheet" href="css/dashboard.css">
+  <title>
+    Ibrah AI | Dashboard
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="css/dashboard.css"
+  >
 
 </head>
 
+
 <body>
 
-<header>
 
-<h2>Ibrah AI</h2>
+  <!-- =================================
+       التطبيق
+  ================================== -->
 
-<button id="logout">Logout</button>
+  <div class="app-shell">
 
-</header>
 
-<div class="card">
+    <!-- =================================
+         Sidebar
+    ================================== -->
 
-<img id="photo">
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
 
-<h2 id="name"></h2>
+      <div class="brand">
 
-<p id="email"></p>
+        <div class="brand-logo">
+          IA
+        </div>
 
-</div>
+        <div>
 
-<div class="info">
+          <h1>
+            Ibrah AI
+          </h1>
 
-<div class="box">
+          <span>
+            AI Workspace
+          </span>
 
-<h3>الخطة</h3>
+        </div>
 
-<p id="plan"></p>
+      </div>
 
-</div>
 
-<div class="box">
+      <nav class="main-nav">
 
-<h3>الحالة</h3>
+        <a
+          href="dashboard.html"
+          class="nav-item active"
+        >
 
-<p id="status"></p>
+          <span>
+            🏠
+          </span>
 
-</div>
+          <span>
+            لوحة التحكم
+          </span>
 
-<div class="box">
+        </a>
 
-<h3>الطلبات</h3>
 
-<p id="requests"></p>
+        <a
+          href="chat.html"
+          class="nav-item"
+        >
 
-</div>
+          <span>
+            💬
+          </span>
 
-<div class="box">
+          <span>
+            المحادثة الذكية
+          </span>
 
-<h3>التجربة</h3>
+        </a>
 
-<p id="trial"></p>
 
-</div>
+        <button
+          type="button"
+          class="nav-item nav-button"
+          id="newChat"
+        >
 
-</div>
+          <span>
+            ✨
+          </span>
 
-<button id="upgrade">
+          <span>
+            محادثة جديدة
+          </span>
 
-Upgrade Lifetime $9
+        </button>
 
-</button>
 
-<a href="chat.html">
-    <button>ابدأ المحادثة</button>
-</a>
+        <a
+          href="payment.html"
+          class="nav-item"
+        >
 
-<script type="module" src="js/dashboard.js"></script>
+          <span>
+            ♾️
+          </span>
+
+          <span>
+            Lifetime
+          </span>
+
+        </a>
+
+      </nav>
+
+
+      <!-- حالة الاشتراك -->
+
+      <div
+        class="sidebar-plan"
+        id="sidebarPlan"
+      >
+
+        <div class="plan-icon">
+          ⚡
+        </div>
+
+        <div>
+
+          <strong>
+            خطتك الحالية
+          </strong>
+
+          <p id="sidebarPlanText">
+            جاري التحميل...
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- تسجيل الخروج -->
+
+      <button
+        id="logout"
+        type="button"
+        class="logout-button"
+      >
+
+        <span>
+          ⇥
+        </span>
+
+        <span>
+          تسجيل الخروج
+        </span>
+
+      </button>
+
+
+    </aside>
+
+
+    <!-- =================================
+         Main Content
+    ================================== -->
+
+    <main class="main-content">
+
+
+      <!-- Topbar -->
+
+      <header class="topbar">
+
+        <button
+          type="button"
+          id="menuToggle"
+          class="menu-toggle"
+          aria-label="فتح القائمة"
+        >
+          ☰
+        </button>
+
+
+        <div class="topbar-title">
+
+          <h2>
+            لوحة التحكم
+          </h2>
+
+          <p>
+            مساحة عملك الذكية مع Ibrah AI
+          </p>
+
+        </div>
+
+
+        <a
+          href="chat.html"
+          class="topbar-chat-button"
+        >
+
+          <span>
+            ✨
+          </span>
+
+          ابدأ المحادثة
+
+        </a>
+
+      </header>
+
+
+      <!-- =================================
+           Welcome Card
+      ================================== -->
+
+      <section
+        class="welcome-card"
+      >
+
+        <div class="welcome-content">
+
+          <span class="welcome-badge">
+            ⚡ AI Workspace
+          </span>
+
+          <h1>
+            مرحبًا بك في
+            <span>
+              Ibrah AI
+            </span>
+          </h1>
+
+          <p>
+            منصة ذكاء اصطناعي ذكية تساعدك على اختيار
+            النموذج الأنسب لمهمتك وتحليل ملفاتك ومساعدتك
+            في الكتابة والبرمجة والتحليل والمزيد.
+          </p>
+
+          <div class="welcome-actions">
+
+            <a
+              href="chat.html"
+              class="primary-action"
+            >
+              ✨ ابدأ محادثة جديدة
+            </a>
+
+            <button
+              type="button"
+              id="upgrade"
+              class="secondary-action"
+            >
+              ♾️ Upgrade Lifetime $9
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="welcome-visual">
+
+          <div class="ai-orb">
+
+            <span>
+              AI
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================
+           User Profile
+      ================================== -->
+
+      <section
+        class="profile-card"
+      >
+
+        <div class="profile-avatar">
+
+          <img
+            id="photo"
+            src=""
+            alt="User profile"
+          >
+
+        </div>
+
+
+        <div class="profile-info">
+
+          <span class="section-label">
+            حسابك
+          </span>
+
+          <h2 id="name">
+            جاري التحميل...
+          </h2>
+
+          <p id="email">
+            جاري تحميل البريد الإلكتروني...
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================
+           Statistics
+      ================================== -->
+
+      <section
+        class="stats-grid"
+      >
+
+
+        <!-- الخطة -->
+
+        <article
+          class="stat-card"
+        >
+
+          <div class="stat-icon">
+            ♾️
+          </div>
+
+          <div>
+
+            <span>
+              الخطة
+            </span>
+
+            <strong id="plan">
+              جاري التحميل...
+            </strong>
+
+          </div>
+
+        </article>
+
+
+        <!-- الحالة -->
+
+        <article
+          class="stat-card"
+        >
+
+          <div class="stat-icon">
+            ●
+          </div>
+
+          <div>
+
+            <span>
+              الحالة
+            </span>
+
+            <strong id="status">
+              جاري التحميل...
+            </strong>
+
+          </div>
+
+        </article>
+
+
+        <!-- الطلبات -->
+
+        <article
+          class="stat-card"
+        >
+
+          <div class="stat-icon">
+            ∑
+          </div>
+
+          <div>
+
+            <span>
+              الطلبات
+            </span>
+
+            <strong id="requests">
+              0
+            </strong>
+
+          </div>
+
+        </article>
+
+
+        <!-- التجربة -->
+
+        <article
+          class="stat-card"
+        >
+
+          <div class="stat-icon">
+            ⏱
+          </div>
+
+          <div>
+
+            <span>
+              التجربة
+            </span>
+
+            <strong id="trial">
+              جاري التحميل...
+            </strong>
+
+          </div>
+
+        </article>
+
+
+      </section>
+
+
+      <!-- =================================
+           AI Workspace Preview
+      ================================== -->
+
+      <section
+        class="workspace-card"
+      >
+
+        <div class="workspace-header">
+
+          <div>
+
+            <span class="section-label">
+              AI ROUTER
+            </span>
+
+            <h2>
+              دع Ibrah AI يختار النموذج الأنسب
+            </h2>
+
+            <p>
+              اكتب طلبك، وسيتم تحليل المهمة وتوجيهها
+              إلى النموذج المناسب تلقائيًا.
+            </p>
+
+          </div>
+
+          <div class="auto-badge">
+            ⚡ Auto
+          </div>
+
+        </div>
+
+
+        <div class="router-options">
+
+          <div class="router-option active">
+
+            <span>
+              ⚡
+            </span>
+
+            <div>
+
+              <strong>
+                Auto Router
+              </strong>
+
+              <small>
+                اختيار النموذج تلقائيًا
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <div class="router-option">
+
+            <span>
+              🤖
+            </span>
+
+            <div>
+
+              <strong>
+                Multiple AI Models
+              </strong>
+
+              <small>
+                أكثر من 5 نماذج ذكاء اصطناعي
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <div class="router-option">
+
+            <span>
+              📎
+            </span>
+
+            <div>
+
+              <strong>
+                File Intelligence
+              </strong>
+
+              <small>
+                تحليل الملفات والمستندات
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <a
+          href="chat.html"
+          class="workspace-action"
+        >
+
+          فتح مساحة الذكاء الاصطناعي
+          <span>
+            ←
+          </span>
+
+        </a>
+
+      </section>
+
+
+      <!-- =================================
+           Lifetime Upgrade
+      ================================== -->
+
+      <section
+        class="upgrade-card"
+      >
+
+        <div>
+
+          <span class="upgrade-badge">
+            ♾️ LIFETIME
+          </span>
+
+          <h2>
+            احصل على تجربة Ibrah AI الكاملة
+          </h2>
+
+          <p>
+            فعّل اشتراك Lifetime واستمتع باستخدام
+            المنصة دون انتهاء الفترة التجريبية.
+          </p>
+
+        </div>
+
+
+        <button
+          id="upgradeBottom"
+          type="button"
+        >
+
+          Upgrade Lifetime
+          <span>
+            $9
+          </span>
+
+        </button>
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+  <!-- =================================
+       Overlay للهاتف
+  ================================== -->
+
+  <div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+  ></div>
+
+
+  <!-- =================================
+       JavaScript
+  ================================== -->
+
+  <script
+    type="module"
+    src="js/dashboard.js"
+  ></script>
+
+
+  <script>
+
+    // ================================
+    // Sidebar Mobile
+    // ================================
+
+    const menuToggle =
+      document.getElementById(
+        "menuToggle"
+      );
+
+    const sidebar =
+      document.getElementById(
+        "sidebar"
+      );
+
+    const sidebarOverlay =
+      document.getElementById(
+        "sidebarOverlay"
+      );
+
+
+    function toggleSidebar() {
+
+      if (!sidebar) {
+        return;
+      }
+
+      sidebar.classList.toggle(
+        "open"
+      );
+
+      sidebarOverlay?.classList.toggle(
+        "active"
+      );
+
+    }
+
+
+    menuToggle?.addEventListener(
+      "click",
+      toggleSidebar
+    );
+
+
+    sidebarOverlay?.addEventListener(
+      "click",
+      toggleSidebar
+    );
+
+
+    // ================================
+    // New Chat
+    // ================================
+
+    document
+      .getElementById(
+        "newChat"
+      )
+      ?.addEventListener(
+        "click",
+        () => {
+
+          window.location.href =
+            "chat.html";
+
+        }
+      );
+
+
+    // ================================
+    // Upgrade Bottom
+    // ================================
+
+    document
+      .getElementById(
+        "upgradeBottom"
+      )
+      ?.addEventListener(
+        "click",
+        () => {
+
+          window.location.href =
+            "payment.html";
+
+        }
+      );
+
+  </script>
+
 
 </body>
 

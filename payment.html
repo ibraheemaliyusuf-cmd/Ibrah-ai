@@ -1,34 +1,260 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>الاشتراك</title>
-<link rel="stylesheet" href="css/payment.css">
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Ibrah AI | الدفع</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
 </head>
+
+
 <body>
 
-<div class="container">
 
-<h1>Lifetime Plan</h1>
+  <main class="payment-container">
 
-<h2>$9</h2>
 
-<p>اشتراك مدى الحياة</p>
+    <div class="payment-card">
 
-<ul>
-<li>✔ جميع نماذج الذكاء الاصطناعي</li>
-<li>✔ تحديثات مستقبلية</li>
-<li>✔ بدون انتهاء</li>
-</ul>
 
-<button id="payBtn">
-اشترك الآن
-</button>
+      <h1>
+        اشتراك Ibrah AI
+      </h1>
 
-</div>
 
-<script type="module" src="js/payment.js"></script>
+      <p class="payment-subtitle">
+        فعّل اشتراكك مدى الحياة واستمتع بجميع المزايا.
+      </p>
+
+
+      <!-- السعر -->
+
+      <div class="price-box">
+
+        <div class="price">
+          $9
+        </div>
+
+        <div class="price-label">
+          اشتراك مدى الحياة ♾️
+        </div>
+
+      </div>
+
+
+      <!-- بيانات المستخدم -->
+
+      <div class="user-info">
+
+
+        <h3>
+          بيانات الحساب
+        </h3>
+
+
+        <p>
+
+          <strong>
+            الاسم:
+          </strong>
+
+          <span id="userName">
+            جاري التحميل...
+          </span>
+
+        </p>
+
+
+        <p>
+
+          <strong>
+            البريد:
+          </strong>
+
+          <span id="userEmail">
+            جاري التحميل...
+          </span>
+
+        </p>
+
+
+      </div>
+
+
+      <!-- طريقة الدفع -->
+
+      <div class="payment-method">
+
+
+        <h3>
+          طريقة الدفع
+        </h3>
+
+
+        <div class="wish-money-box">
+
+
+          <h4>
+            Wish Money
+          </h4>
+
+
+          <p>
+            قم بتحويل مبلغ
+            <strong>$9</strong>
+            ثم أدخل بيانات العملية أدناه.
+          </p>
+
+
+          <div class="payment-account">
+
+
+            <span>
+              رقم حساب الدفع:
+            </span>
+
+
+            <strong id="wishMoneyNumber">
+              سيتم إضافة رقم الحساب هنا
+            </strong>
+
+
+          </div>
+
+
+          <p class="payment-note">
+
+            بعد التحويل، أدخل رقم العملية واسم صاحب التحويل
+            ثم اضغط على إرسال طلب الدفع.
+
+          </p>
+
+
+        </div>
+
+
+      </div>
+
+
+      <!-- نموذج الدفع -->
+
+      <form id="paymentForm">
+
+
+        <div class="form-group">
+
+
+          <label for="senderName">
+            اسم صاحب التحويل
+          </label>
+
+
+          <input
+            type="text"
+            id="senderName"
+            placeholder="أدخل اسم صاحب التحويل"
+            required
+          >
+
+
+        </div>
+
+
+        <div class="form-group">
+
+
+          <label for="transactionId">
+            رقم العملية / رقم التحويل
+          </label>
+
+
+          <input
+            type="text"
+            id="transactionId"
+            placeholder="أدخل رقم العملية"
+            required
+          >
+
+
+        </div>
+
+
+        <div class="form-group">
+
+
+          <label for="paymentNote">
+            ملاحظات إضافية
+          </label>
+
+
+          <textarea
+            id="paymentNote"
+            placeholder="أي معلومات إضافية..."
+            rows="4"
+          ></textarea>
+
+
+        </div>
+
+
+        <button
+          type="submit"
+          id="submitPayment"
+        >
+
+          إرسال طلب الدفع
+
+        </button>
+
+
+      </form>
+
+
+      <!-- حالة الطلب -->
+
+      <div
+        id="paymentStatus"
+        class="payment-status"
+      ></div>
+
+
+      <!-- العودة -->
+
+      <button
+        type="button"
+        id="backDashboard"
+        class="secondary-button"
+      >
+
+        العودة إلى لوحة التحكم
+
+      </button>
+
+
+    </div>
+
+
+  </main>
+
+
+  <script
+    type="module"
+    src="js/payment.js"
+  ></script>
+
 
 </body>
+
 </html>
