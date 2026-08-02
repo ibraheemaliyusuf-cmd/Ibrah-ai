@@ -3,79 +3,628 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>Ibrah AI Chat</title>
+  <meta
+    name="theme-color"
+    content="#070b16"
+  >
 
-<link rel="stylesheet" href="css/chat.css">
+  <title>
+    Ibrah AI | AI Workspace
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="./css/chat.css"
+  >
 
 </head>
 
+
 <body>
 
-<div class="sidebar">
 
-<h2>Ibrah AI</h2>
+  <div class="chat-app">
 
-<button id="newChat">
-➕ محادثة جديدة
-</button>
 
-<button id="historyBtn">
-📜 السجل
-</button>
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
 
-<button id="dashboardBtn">
-🏠 لوحة التحكم
-</button>
+    <aside
+      id="chatSidebar"
+      class="chat-sidebar"
+    >
 
-<button id="paymentBtn">
-💎 الترقية
-</button>
 
-<button id="logoutBtn">
-🚪 تسجيل الخروج
-</button>
+      <!-- Brand -->
 
-</div>
+      <div class="chat-brand">
 
-<div class="main">
+        <div class="chat-brand-logo">
+          IA
+        </div>
 
-<div id="messages">
+        <div>
 
-<div class="ai">
+          <strong>
+            Ibrah AI
+          </strong>
 
-مرحبًا 👋
+          <span>
+            AI Workspace
+          </span>
 
-كيف يمكنني مساعدتك اليوم؟
+        </div>
 
-</div>
+      </div>
 
-</div>
 
-<div class="bottom">
+      <!-- New Chat -->
 
-<textarea
+      <button
+        id="newChat"
+        class="new-chat-button"
+        type="button"
+      >
 
-id="message"
+        <span>
+          ✨
+        </span>
 
-placeholder="اكتب رسالتك..."
+        <span>
+          محادثة جديدة
+        </span>
 
-></textarea>
+      </button>
 
-<button id="send">
 
-إرسال
+      <!-- Navigation -->
 
-</button>
+      <nav class="chat-navigation">
 
-</div>
 
-</div>
+        <a
+          href="dashboard.html"
+          class="chat-nav-item"
+        >
 
-<script type="module" src="js/chat.js"></script>
+          <span>
+            🏠
+          </span>
+
+          <span>
+            لوحة التحكم
+          </span>
+
+        </a>
+
+
+        <a
+          href="payment.html"
+          class="chat-nav-item"
+        >
+
+          <span>
+            ♾️
+          </span>
+
+          <span>
+            Lifetime
+          </span>
+
+        </a>
+
+
+      </nav>
+
+
+      <!-- User Area -->
+
+      <div class="chat-user-area">
+
+
+        <div class="chat-user-avatar">
+
+          <img
+            id="userPhoto"
+            alt="User"
+          >
+
+        </div>
+
+
+        <div class="chat-user-info">
+
+          <strong id="userName">
+            مستخدم
+          </strong>
+
+          <span id="userPlan">
+            Trial
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- Logout -->
+
+      <button
+        id="logout"
+        class="chat-logout"
+        type="button"
+      >
+
+        <span>
+          ⇥
+        </span>
+
+        تسجيل الخروج
+
+      </button>
+
+
+    </aside>
+
+
+    <!-- =========================================
+         MAIN CHAT
+    ========================================== -->
+
+    <main class="chat-main">
+
+
+      <!-- =======================================
+           TOPBAR
+      ======================================== -->
+
+      <header class="chat-topbar">
+
+
+        <div class="chat-topbar-left">
+
+
+          <button
+            id="menuToggle"
+            class="chat-menu-toggle"
+            type="button"
+            aria-label="فتح القائمة"
+          >
+
+            ☰
+
+          </button>
+
+
+          <div>
+
+            <h1>
+              المحادثة الذكية
+            </h1>
+
+            <span>
+              Ibrah AI Workspace
+            </span>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- Router Status -->
+
+        <div
+          id="routerStatus"
+          class="router-status"
+        >
+
+          <span class="router-status-dot"></span>
+
+          <span>
+            Auto Router
+          </span>
+
+        </div>
+
+
+      </header>
+
+
+      <!-- =======================================
+           AI MODEL BAR
+      ======================================== -->
+
+      <section
+        class="ai-control-bar"
+      >
+
+
+        <!-- Router Mode -->
+
+        <div class="ai-control-group">
+
+
+          <label
+            for="modelMode"
+          >
+            وضع الذكاء الاصطناعي
+          </label>
+
+
+          <select
+            id="modelMode"
+          >
+
+            <option value="auto">
+              ⚡ Auto — اختيار تلقائي
+            </option>
+
+            <option value="manual">
+              🤖 اختيار النموذج يدويًا
+            </option>
+
+          </select>
+
+
+        </div>
+
+
+        <!-- Model -->
+
+        <div
+          id="modelSelectorGroup"
+          class="ai-control-group model-selector-group"
+        >
+
+
+          <label
+            for="modelSelect"
+          >
+            النموذج
+          </label>
+
+
+          <select
+            id="modelSelect"
+            disabled
+          >
+
+            <option value="auto">
+              Auto Router
+            </option>
+
+          </select>
+
+
+        </div>
+
+
+        <!-- Current Model -->
+
+        <div
+          id="activeModel"
+          class="active-model"
+        >
+
+          <span>
+            ⚡
+          </span>
+
+          <div>
+
+            <small>
+              النموذج الحالي
+            </small>
+
+            <strong>
+              Auto Router
+            </strong>
+
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+      <!-- =======================================
+           MESSAGES
+      ======================================== -->
+
+      <section
+        id="messages"
+        class="messages"
+        aria-live="polite"
+      >
+
+
+        <!-- Welcome -->
+
+        <div
+          id="welcomeMessage"
+          class="welcome-screen"
+        >
+
+
+          <div class="welcome-ai-icon">
+            ✨
+          </div>
+
+
+          <h2>
+            مرحبًا بك في Ibrah AI
+          </h2>
+
+
+          <p>
+            اكتب ما تريد، وسيقوم نظام
+            <strong>
+              Auto Router
+            </strong>
+            بتحليل طلبك واختيار النموذج الأنسب لمهمتك.
+          </p>
+
+
+          <div class="suggestion-grid">
+
+
+            <button
+              type="button"
+              class="suggestion-card"
+              data-prompt="اكتب لي مقالًا احترافيًا عن الذكاء الاصطناعي"
+            >
+
+              <span>
+                ✍️
+              </span>
+
+              <strong>
+                الكتابة
+              </strong>
+
+              <small>
+                كتابة وتحسين المحتوى
+              </small>
+
+            </button>
+
+
+            <button
+              type="button"
+              class="suggestion-card"
+              data-prompt="اشرح لي هذا الموضوع بطريقة بسيطة ومفصلة"
+            >
+
+              <span>
+                🧠
+              </span>
+
+              <strong>
+                الشرح
+              </strong>
+
+              <small>
+                فهم وتحليل المفاهيم
+              </small>
+
+            </button>
+
+
+            <button
+              type="button"
+              class="suggestion-card"
+              data-prompt="اكتب لي كود JavaScript احترافي مع شرح"
+            >
+
+              <span>
+                💻
+              </span>
+
+              <strong>
+                البرمجة
+              </strong>
+
+              <small>
+                كتابة وتحليل الكود
+              </small>
+
+            </button>
+
+
+            <button
+              type="button"
+              class="suggestion-card"
+              data-prompt="حلل البيانات التي سأرسلها لك وأعطني أهم النتائج"
+            >
+
+              <span>
+                📊
+              </span>
+
+              <strong>
+                التحليل
+              </strong>
+
+              <small>
+                تحليل البيانات والملفات
+              </small>
+
+            </button>
+
+
+          </div>
+
+
+        </div>
+
+
+      </section>
+
+
+      <!-- =======================================
+           ATTACHMENT PREVIEW
+      ======================================== -->
+
+      <div
+        id="attachmentPreview"
+        class="attachment-preview"
+        hidden
+      >
+
+        <div class="attachment-info">
+
+          <span class="attachment-icon">
+            📎
+          </span>
+
+          <div>
+
+            <strong id="attachmentName">
+              ملف
+            </strong>
+
+            <small id="attachmentSize">
+              0 KB
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <button
+          id="removeAttachment"
+          type="button"
+          aria-label="إزالة الملف"
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      <!-- =======================================
+           COMPOSER
+      ======================================== -->
+
+      <section
+        class="composer-area"
+      >
+
+
+        <div
+          id="composer"
+          class="composer"
+        >
+
+
+          <!-- File Upload -->
+
+          <label
+            for="fileInput"
+            class="file-button"
+            title="رفع ملف"
+          >
+
+            📎
+
+          </label>
+
+
+          <input
+            id="fileInput"
+            type="file"
+            hidden
+          >
+
+
+          <!-- Message -->
+
+          <textarea
+            id="message"
+            placeholder="اكتب رسالتك هنا..."
+            autocomplete="off"
+            rows="1"
+          ></textarea>
+
+
+          <!-- Send -->
+
+          <button
+            id="send"
+            type="button"
+            aria-label="إرسال الرسالة"
+          >
+
+            <span>
+              ➤
+            </span>
+
+          </button>
+
+
+        </div>
+
+
+        <div class="composer-footer">
+
+
+          <span>
+            Ibrah AI قد يخطئ أحيانًا. تحقق من المعلومات المهمة.
+          </span>
+
+
+          <span
+            id="fileSupportText"
+          >
+            📎 رفع الملفات متاح
+          </span>
+
+
+        </div>
+
+
+      </section>
+
+
+    </main>
+
+
+  </div>
+
+
+  <!-- =========================================
+       MOBILE OVERLAY
+  ========================================== -->
+
+  <div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+  ></div>
+
+
+  <!-- =========================================
+       CHAT JS
+  ========================================== -->
+
+  <script
+    type="module"
+    src="./js/chat.js"
+  ></script>
+
 
 </body>
 
